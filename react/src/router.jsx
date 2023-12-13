@@ -1,51 +1,49 @@
-import { createBrowserRouter } from "react-router-dom";
-import Users from "./views/Users";
-import Login from "./views/Login";
-import Signup from "./views/Signup";
-import Notfound from "./views/Notfound";
+import {createBrowserRouter, Navigate} from "react-router-dom";
+import Dashboard from "./Dashboard.jsx";
 import DefaultLayout from "./components/DefaultLayout";
 import GuestLayout from "./components/GuestLayout";
-import Dashboard from "./views/Dashboard";
+import Login from "./views/Login";
+import NotFound from "./views/Notfound";
+import Signup from "./views/Signup";
+import Users from "./views/Users";
 
 const router = createBrowserRouter([
   {
-    path: "/",
-    element: <DefaultLayout />,
+    path: '/',
+    element: <DefaultLayout/>,
     children: [
       {
-        path: "/",
-        element: <Navigator to='/users' />,
+        path: '/',
+        element: <Navigate to="/users"/>
       },
       {
-        path: "/dashboard",
-        element: <Dashboard />,
+        path: '/dashboard',
+        element: <Dashboard/>
       },
       {
-        path: "/users",
-        element: <Users />,
+        path: '/users',
+        element: <Users/>
       },
-    ],
+    ]
   },
   {
-    path: "/",
-    element: <GuestLayout />,
+    path: '/',
+    element: <GuestLayout/>,
     children: [
       {
-        path: "/login",
-        element: <Login />,
+        path: '/login',
+        element: <Login/>
       },
-
       {
-        path: "/signup",
-        element: <Signup />,
-      },
-    ],
+        path: '/signup',
+        element: <Signup/>
+      }
+    ]
   },
-
   {
     path: "*",
-    element: <Notfound />,
-  },
-]);
+    element: <NotFound/>
+  }
+])
 
 export default router;
