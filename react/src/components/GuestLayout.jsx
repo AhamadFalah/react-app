@@ -8,8 +8,8 @@ const GuestLayout = () => {
     return <Navigate to="/" />
   }
   return (
-    <div>
-        For Guest Users Only
+
+    <div id="guestLayout">
       <Outlet />
     </div>
   );
