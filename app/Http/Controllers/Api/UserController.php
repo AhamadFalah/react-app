@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\user;
-use App\Http\Requests\StoreuserRequest;
-use App\Http\Requests\UpdateuserRequest;
+use App\Models\User;
+use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\UserResource;
 
 class UserController extends Controller
@@ -15,38 +15,39 @@ class UserController extends Controller
      */
     public function index()
     {
-        return UserResource::collection(User::query()->orderBy("id", "desc")->paginate());
+        return UserResource::collection(
+            User::query()->orderBy('id','desc')->paginate()
+        );
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreuserRequest $request)
+    public function store(StoreUserRequest $request)
     {
         $data = $request->validated();
-        $data['password'] = bcrypt($data['password']);
-        User::create($data);
-        return response(new UserResource($user),201);
+        $data['password'] =bcrypt($data['password']);
+        $user = User::create($data);
+        return response(new UserResource($user), 201);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(user $user)
+    public function show(User $user)
     {
-        //
+        return new UserResource($user);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateuserRequest $request, user $user)
+    public function update(UpdateUserRequest $request, User $user)
     {
         $data = $request->validated();
-        if(isset($data['password'])){
-            $data['password'] = bcrypt($data['password']);
+        if(isset($data['password'])) {
+            $data['password'] = bcrypt(($data['password']));
         }
-
         $user->update($data);
 
         return new UserResource($user);
@@ -55,10 +56,10 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(user $user)
+    public function destroy(User $user)
     {
         $user->delete();
 
-        return response("",204);
+        return response("", 204);
     }
 }
